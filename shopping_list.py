@@ -7,7 +7,7 @@ class ShoppingList:
     items : list
         A list to store shopping items.
 
-  
+  metodes
     -------
     add_item(item):
         Adds an item to the shopping list.
