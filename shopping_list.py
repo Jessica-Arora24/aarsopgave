@@ -19,35 +19,33 @@ class ShoppingList:
         Returns the list of shopping items.
     """
     def __init__(self):
-        self.items = []
+        self.items = {}  # Brug en ordbog til at gemme varer og antal
 
-    def add_item(self, item):
-        self.items.append(item)
-
-    def remove_item(self, item):
+    def add(self, item, quantity=1):
         if item in self.items:
-            self.items.remove(item)
+            self.items[item] += quantity  # Hvis varen allerede findes, øg antallet
+        else:
+            self.items[item] = quantity  # Ellers tilføj varen med den angivne mængde
+
+    def remove(self, item, quantity=None):
+        if item in self.items:
+            if quantity is None or self.items[item] <= quantity:
+                del self.items[item]  # Fjern varen helt, hvis ingen mængde er angivet, eller hvis den bliver nul
+            else:
+                self.items[item] -= quantity  # Reducer antallet af varen
 
     def get_items(self):
-        return self.items
+        return self.items  # Returner hele indkøbslisten som en ordbog
 
-# Example usage:
+# Test af klassen
 if __name__ == "__main__":
     shopping_list = ShoppingList()
-    shopping_list.add_item("Apples")
-    shopping_list.add_item("Bananas")
-    print(shopping_list.get_items())  # Output: ['Apples', 'Bananas']
-    shopping_list.remove_item("Apples")
-    print(shopping_list.get_items())  # Output: ['Bananas']
-
-if __name__ == "__main__":
-    shopping_list = ShoppingList()
-    shopping_list.add_item("Apples", 2)
-    shopping_list.add_item("Bananas", 3)
+    shopping_list.add("Apples", 2)
+    shopping_list.add("Bananas", 3)
     print(shopping_list.get_items())  # Output: {'Apples': 2, 'Bananas': 3}
     
-    shopping_list.remove_item("Apples", 1)
+    shopping_list.remove("Apples", 1)
     print(shopping_list.get_items())  # Output: {'Apples': 1, 'Bananas': 3}
     
-    shopping_list.remove_item("Apples")
+    shopping_list.remove("Apples")
     print(shopping_list.get_items())  # Output: {'Bananas': 3}
